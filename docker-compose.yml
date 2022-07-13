@@ -5,20 +5,21 @@ services:
     build:
       context: .
       args:
-       - DEV=true
+        - DEV=true
     ports:
       - "8000:8000"
     volumes:
       - ./app:/app
+      - dev-static-data:/vol/web
     command: >
       sh -c "python manage.py wait_for_db &&
              python manage.py migrate &&
              python manage.py runserver 0.0.0.0:8000"
     environment:
-      - DOCKER_DB_HOST=db
-      - DOCKER_DB_NAME=devdb
-      - DOCKER_DB_USER=devuser
-      - DOCKER_DB_PASS=changeme
+      - DB_HOST=db
+      - DB_NAME=dbname
+      - DB_USER=rootuser
+      - DB_PASS=changeme
       - DEBUG=1
     depends_on:
       - db
@@ -28,10 +29,10 @@ services:
     volumes:
       - dev-db-data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=devdb
-      - POSTGRES_USER=devuser
+      - POSTGRES_DB=dbname
+      - POSTGRES_USER=rootuser
       - POSTGRES_PASSWORD=changeme
 
 volumes:
   dev-db-data:
-  
+  dev-static-data:
