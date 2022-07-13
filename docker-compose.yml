@@ -19,6 +19,7 @@ services:
       - DOCKER_DB_NAME=devdb
       - DOCKER_DB_USER=devuser
       - DOCKER_DB_PASS=changeme
+      - DEBUG=1
     depends_on:
       - db
 
